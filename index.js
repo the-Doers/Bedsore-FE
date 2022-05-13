@@ -16,7 +16,11 @@ app.use(
 );
 
 app.get("/", function (req, res) {
-  res.render("home");
+  if (loggedIn) {
+    res.render("home");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/login", function (req, res) {
@@ -24,6 +28,17 @@ app.get("/login", function (req, res) {
     res.redirect("/");
   }
   res.render("login");
+});
+
+app.post("/login", function (req, res) {
+  const username = req.body.username;
+  const pass = req.body.password;
+  if (username === "admin" && pass === "admin") {
+    loggedIn = true;
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.listen(3000, function () {
