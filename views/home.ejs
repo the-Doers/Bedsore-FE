@@ -176,14 +176,30 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
     <section class="vh-100 gradient-custom">
 
-        <div style="display:inline-block; float:left" id="container"></div>
-        <script>
-            Matrix({
-                container: "#container",
-                start_color: "#FC7C89",
-                end_color: "#21A38B",
-            })
-        </script>
+        <div class="row">
+            <div class="col-sm-6">
+                <div style="display:inline-block; float:left" id="container"></div>
+            </div>
+            <div class="col-sm-6 p-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                            of
+                            the card's content.</p>
+                        <button type="button" class="btn btn-primary">Button</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                Matrix({
+                    container: "#container",
+                    start_color: "#FC7C89",
+                    end_color: "#21A38B",
+                })
+            </script>
+        </div>
+
 
     </section>
     <%- include('partials/footer') %>
