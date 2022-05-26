@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 
-var loggedIn = false;
+var loggedIn = true;
 
 const app = express();
 
@@ -15,9 +15,14 @@ app.use(
   })
 );
 
+const data = [
+  [-350, -400],
+  [-800, -420],
+];
+
 app.get("/", function (req, res) {
   if (loggedIn) {
-    res.render("home");
+    res.render("home", { data: data });
   } else {
     res.redirect("/login");
   }
