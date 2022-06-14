@@ -1,5 +1,59 @@
-<%- include('partials/header') %>
-    <div style="padding: 1rem">
-        <h1>Hello</h1>
-    </div>
-    <%- include('partials/footer') %>
+<!-- <div style="padding: 1rem">
+        <% for (const i in data) { %>
+            <%= data[i].pid %>
+                <%= data[i].id %>
+                    <%= data[i].p1 %>
+                        <%= data[i].p2 %>
+                            <%= data[i].p3 %>
+                                <%= data[i].p4 %>
+                                    <%= data[i].temp %>
+                                        <%= data[i].hum %>
+                                            <%= data[i].amb_hum %>
+                                                <%= data[i].amb_temp %>
+                                                    <% } %>
+    </div> -->
+<html>
+
+
+<head>
+    <% const dataRec=data1; %>
+        <% const dataRec1=length; %>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawChart);
+                var data2 = '<%= dataRec %>'.split(',');
+                let j = 0;
+                let chartData = [['ID', 'P1', 'P2', 'P3', 'P4']];
+                for (let i = 0; i < '<%= dataRec1 %>'; i++) {
+                    let temp = [];
+                    temp.push(parseInt(data2[j]));
+                    temp.push(parseInt(data2[j + 1]));
+                    temp.push(parseInt(data2[j + 2]));
+                    temp.push(parseInt(data2[j + 3]));
+                    temp.push(parseInt(data2[j + 4]));
+                    j = j + 5;
+                    chartData.push(temp);
+                }
+                console.log(chartData);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable(chartData);
+
+                    var options = {
+                        title: 'Pressure Chart',
+                        curveType: 'function',
+                        legend: { position: 'bottom' }
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                    chart.draw(data, options);
+                }
+            </script>
+</head>
+
+<body>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+</body>
+
+</html>

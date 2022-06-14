@@ -98,8 +98,8 @@ app.post("/home", (req, res) => {
         if (error) throw error;
         console.log(result[0]);
         const data1 = [
-          [result[0].p1, result[0].p2],
-          [result[0].p3, result[0].p4],
+          [-result[0].p1, -result[0].p2],
+          [-result[0].p3, -result[0].p4],
         ];
         res.render("home", { data: result[0], data1:data1, id: id });
       }
@@ -113,7 +113,18 @@ app.post("/home", (req, res) => {
 app.post("/history", (req, res) => {
   if (loggedIn) {
     const { id } = req.body;
-    res.render("history", { data: id});
+    connection.query(
+      "select D.id,D.p1, D.p2, D.p3, D.p4, D.hum, D.temp, D.amb_hum, D.amb_temp, D.amb_temp from Data D where D.pid = " + connection.escape(id),
+      (error, result) => {
+        if (error) throw error;
+        let data1 = [];
+        for (let i = 0; i < result.length; i++) {
+          data1.push([result[i].id, result[i].p1, result[i].p2, result[i].p3, result[i].p4]);
+        }
+        console.log(result.length);
+        res.render("history", { data: result, data1:data1, length:result.length });
+      }
+    );
   } else {
     res.redirect("/login");
   }
