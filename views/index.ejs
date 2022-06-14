@@ -24,16 +24,16 @@
                         </h4>
 
                         <h4 class="pt-4 pb-3">Select Patient to view current and past Status</h4>
-                        <select class="btn btn-secondary white-text dropdown-toggle" name="id" id="id">
-                            <% for (const i in data) { %>
-                                <option class="dropdown-item white-text font-semibold" value="<%= data[i].pid %>">
-                                    <%= data[i].name %>
-                                </option>
-                                <% } %>
-                        </select>
-                        <button class="btn btn-primary" id="view">View</button>
-
-
+                        <form action="/home" method="POST">
+                            <select class="btn btn-secondary white-text dropdown-toggle" name="id" id="id">
+                                <% for (const i in data) { %>
+                                    <option class="dropdown-item white-text font-semibold" value="<%= data[i].pid %>">
+                                        <%= data[i].name %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                            <button type="submit" class="btn btn-primary" id="view">View</button>
+                        </form>
                     </div>
                 </div>
             </div>

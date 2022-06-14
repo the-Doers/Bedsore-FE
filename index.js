@@ -31,20 +31,16 @@ connection.connect((err) => {
   console.log("Connected to the MySQL server.");
 });
 
-const data = [
-  [-350, -400],
-  [-800, -420],
-];
-
+//__________________MAIN_____________________//
 app.get("/", function (req, res) {
   if (loggedIn) {
     res.redirect("index");
-    // res.render("home", { data: data });
   } else {
     res.redirect("/login");
   }
 });
 
+//__________________LOGIN_____________________//
 app.get("/login", function (req, res) {
   if (loggedIn) {
     res.redirect("/");
@@ -52,6 +48,18 @@ app.get("/login", function (req, res) {
   res.render("login");
 });
 
+app.post("/login", function (req, res) {
+  const username = req.body.username;
+  const pass = req.body.password;
+  if (username === "admin" && pass === "admin") {
+    loggedIn = true;
+    res.redirect("/");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+//__________________INDEX_____________________//
 app.get("/index", (req, res) => {
   if (loggedIn) {
     connection.query(
@@ -79,17 +87,39 @@ app.get("/index", (req, res) => {
   }
 });
 
-app.post("/login", function (req, res) {
-  const username = req.body.username;
-  const pass = req.body.password;
-  if (username === "admin" && pass === "admin") {
-    loggedIn = true;
-    res.redirect("/");
+//__________________HOME_____________________//
+
+app.post("/home", (req, res) => {
+  if (loggedIn) {
+    const { id } = req.body;
+    connection.query(
+      "select D.id,D.p1, D.p2, D.p3, D.p4, D.hum, D.temp, D.amb_hum, D.amb_temp, D.amb_temp from Data D where D.pid = " + connection.escape(id) + " order by D.id desc limit 1",
+      (error, result) => {
+        if (error) throw error;
+        console.log(result[0]);
+        const data1 = [
+          [result[0].p1, result[0].p2],
+          [result[0].p3, result[0].p4],
+        ];
+        res.render("home", { data: result[0], data1:data1, id: id });
+      }
+    );
   } else {
     res.redirect("/login");
   }
 });
 
+//__________________HISTORY_____________________//
+app.post("/history", (req, res) => {
+  if (loggedIn) {
+    const { id } = req.body;
+    res.render("history", { data: id});
+  } else {
+    res.redirect("/login");
+  }
+});
+
+//__________________PORT BIND_____________________//
 app.listen(3000, function () {
   console.log("Server started on port 3000.");
 });

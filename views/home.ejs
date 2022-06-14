@@ -1,5 +1,5 @@
 <%- include('partials/header') %>
-    <% const dataRec=data; %>
+    <% const dataRec=data1; %>
         <script>
             // Assign a 2d array of correlating vaReclues.
             // This each subarray will render as a row
@@ -188,7 +188,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet" />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
         <section class="vh-100 gradient-custom">
-            <h2 style="padding: 1rem; color: aliceblue;">Sensor Monitor</h2>
+            <h2 style="padding-top: 1rem; padding-left: 3rem; color: aliceblue;">Sensor Monitor</h2>
             <div class="row">
                 <div class="col col-sm-6 p-3">
                     <!-- form- inputs for sensors, and date and time picker to check historical vals -->
@@ -197,50 +197,59 @@
                 <div class="col col-sm-5 p-3">
                     <div class="card">
                         <div class="card-body pt-3">
-                            <h5 class="card-title">Sensor Values</h5>
+                            <h5 class="card-title">Latest Sensor Values</h5>
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-3">
                                         <label for="sensor1" class="form-label">Pressure Sensor 1</label>
-                                        <input type="number" value="<%= -dataRec[0][0] %>" class="form-control"
-                                            id="sensor1" disabled>
+                                        <input type="number" value="<%= -data.p1 %>" class="form-control" id="sensor1"
+                                            disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sensor2" class="form-label">Pressure Sensor 2</label>
-                                        <input type="number" value="<%= -dataRec[0][1] %>" class="form-control"
-                                            id="sensor1" disabled>
+                                        <input type="number" value="<%= -data.p2 %>" class="form-control" id="sensor1"
+                                            disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sensor3" class="form-label">Pressure Sensor 3</label>
-                                        <input type="number" value="<%= -dataRec[1][1] %>" class="form-control"
-                                            id="sensor1" disabled>
+                                        <input type="number" value="<%= -data.p3 %>" class="form-control" id="sensor1"
+                                            disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sensor4" class="form-label">Pressure Sensor 4</label>
-                                        <input type="number" value="<%= -dataRec[1][0] %>" class="form-control"
-                                            id="sensor1" disabled>
+                                        <input type="number" value="<%= -data.p4 %>" class="form-control" id="sensor1"
+                                            disabled>
                                     </div>
                                     <!-- <button type="button" class="btn btn-primary">Button</button> -->
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="mb-3">
                                         <label for="sensor1" class="form-label">Ambient Moisture</label>
-                                        <input type="number" class="form-control" id="sensor1" disabled>
+                                        <input type="number" class="form-control" id="sensor1"
+                                            value="<%= data.amb_hum %>" disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sensor2" class="form-label">Ambient Temperature</label>
-                                        <input type="number" class="form-control" id="sensor1" disabled>
+                                        <input type="number" class="form-control" id="sensor1"
+                                            value="<%= data.amb_temp %>" disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sensor3" class="form-label">Skin Moisture</label>
-                                        <input type="number" class="form-control" id="sensor1" disabled>
+                                        <input type="number" class="form-control" id="sensor1" value="<%= data.hum %>"
+                                            disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label for="sensor4" class="form-label">Skin</label>
-                                        <input type="number" class="form-control" id="sensor1" disabled>
+                                        <input type="number" class="form-control" id="sensor1" value="<%= data.temp %>"
+                                            disabled>
                                     </div>
-                                    <!-- <button type="button" class="btn btn-primary">Button</button> -->
+
                                 </div>
+                                <form action="/history" method="POST">
+                                    <input type="hidden" name="id" value="<%= id %>">
+                                    <button class="btn btn-primary col-sm-12" type="submit">View Historical
+                                        Data</button>
+                                </form>
                             </div>
                         </div>
                     </div>
