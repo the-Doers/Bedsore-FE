@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const mysql = require("mysql");
 
 var loggedIn = true;
 
@@ -15,6 +16,21 @@ app.use(
   })
 );
 
+//__________________DATABASE CONNECTION_____________________//
+let connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_USERNAME,
+});
+
+connection.connect((err) => {
+  if (err) {
+    return console.error("error: " + err.message);
+  }
+  console.log("Connected to the MySQL server.");
+});
+
 const data = [
   [-350, -400],
   [-800, -420],
@@ -22,7 +38,8 @@ const data = [
 
 app.get("/", function (req, res) {
   if (loggedIn) {
-    res.render("home", { data: data });
+    res.redirect("index");
+    // res.render("home", { data: data });
   } else {
     res.redirect("/login");
   }
@@ -33,6 +50,33 @@ app.get("/login", function (req, res) {
     res.redirect("/");
   }
   res.render("login");
+});
+
+app.get("/index", (req, res) => {
+  if (loggedIn) {
+    connection.query(
+      "select P.pid, P.name, P.monitoring, P.risk from Patient P",
+      (error, result) => {
+        if (error) throw error;
+        console.log(result);
+        let mcount = 0, rcount = 0;
+        let rpatient = [];
+        for (let i = 0; i < result.length; i++) {
+          if (result[i].monitoring == 1) {
+            mcount += 1;
+          }
+          if (result[i].risk == 1) {
+            rcount += 1;
+            rpatient.push(result[i].name);
+          }
+        }
+        count = { mcount: mcount, rcount: rcount };
+        res.render("index", { data: result, count: count, rpatient: rpatient });
+      }
+    );
+  } else {
+      res.redirect("/login");
+  }
 });
 
 app.post("/login", function (req, res) {

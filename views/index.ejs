@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+    <div style="padding: 1rem">
+        <h2 style="padding: 1rem; color: aliceblue;">Welcome to Ulcer Prevention System</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="card-text">
+                            <li>This is a portal which allows you to monitor patients status</li>
+                            <li>You can also view the historical data of your patients status</li>
+                            <li>Select the patient to view the current status and the historical status</li>
+                        </ul>
+                        <h4>Number of Currently Monitoring Patients: <%= count.mcount %>
+                        </h4>
+                        <h4 class="pt-4">Number of Patients at Risk: <%= count.rcount %> <select
+                                    class="btn btn-danger white-text dropdown-toggle" name="id" id="id">
+                                    <% for (let i in rpatient) { %>
+                                        <option class="dropdown-item white-text font-semibold"
+                                            value="<%= rpatient[i] %>">
+                                            <%= rpatient[i] %>
+                                        </option>
+                                        <% } %>
+                                </select>
+                        </h4>
+
+                        <h4 class="pt-4 pb-3">Select Patient to view current and past Status</h4>
+                        <select class="btn btn-secondary white-text dropdown-toggle" name="id" id="id">
+                            <% for (const i in data) { %>
+                                <option class="dropdown-item white-text font-semibold" value="<%= data[i].pid %>">
+                                    <%= data[i].name %>
+                                </option>
+                                <% } %>
+                        </select>
+                        <button class="btn btn-primary" id="view">View</button>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img src="/5063406.jpg" alt="Representational image" style="height:22rem; width:37rem" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <%- include('partials/footer') %>
