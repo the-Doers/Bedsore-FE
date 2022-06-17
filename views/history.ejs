@@ -1,59 +1,116 @@
-<!-- <div style="padding: 1rem">
-        <% for (const i in data) { %>
-            <%= data[i].pid %>
-                <%= data[i].id %>
-                    <%= data[i].p1 %>
-                        <%= data[i].p2 %>
-                            <%= data[i].p3 %>
-                                <%= data[i].p4 %>
-                                    <%= data[i].temp %>
-                                        <%= data[i].hum %>
-                                            <%= data[i].amb_hum %>
-                                                <%= data[i].amb_temp %>
-                                                    <% } %>
-    </div> -->
 <html>
 
 
 <head>
-    <% const dataRec=data1; %>
-        <% const dataRec1=length; %>
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
-                google.charts.load('current', { 'packages': ['corechart'] });
-                google.charts.setOnLoadCallback(drawChart);
-                var data2 = '<%= dataRec %>'.split(',');
-                let j = 0;
-                let chartData = [['ID', 'P1', 'P2', 'P3', 'P4']];
-                for (let i = 0; i < '<%= dataRec1 %>'; i++) {
-                    let temp = [];
-                    temp.push(parseInt(data2[j]));
-                    temp.push(parseInt(data2[j + 1]));
-                    temp.push(parseInt(data2[j + 2]));
-                    temp.push(parseInt(data2[j + 3]));
-                    temp.push(parseInt(data2[j + 4]));
-                    j = j + 5;
-                    chartData.push(temp);
-                }
-                console.log(chartData);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable(chartData);
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css" rel="stylesheet" />
 
-                    var options = {
-                        title: 'Pressure Chart',
-                        curveType: 'function',
-                        legend: { position: 'bottom' }
-                    };
+    <% const dataRec_pressure=data_pressure; %>
+        <% const dataRec_hum=data_hum; %>
+            <% const dataRec_amb=data_amb; %>
+                <% const dataRec_length=length; %>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
 
-                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                        // Pressure Chart
+                        google.charts.load('current', { 'packages': ['corechart'] });
+                        google.charts.setOnLoadCallback(drawPressureChart);
+                        var data_temp_1 = '<%= dataRec_pressure %>'.split(',');
+                        var j = 0;
+                        var pressureChartData = [['ID', 'P1', 'P2', 'P3', 'P4']];
+                        for (let i = 0; i < '<%= dataRec_length %>'; i++) {
+                            let temp = [];
+                            temp.push(parseInt(data_temp_1[j]));
+                            temp.push(parseInt(data_temp_1[j + 1]));
+                            temp.push(parseInt(data_temp_1[j + 2]));
+                            temp.push(parseInt(data_temp_1[j + 3]));
+                            temp.push(parseInt(data_temp_1[j + 4]));
+                            j = j + 5;
+                            pressureChartData.push(temp);
+                        }
+                        function drawPressureChart() {
+                            var data = google.visualization.arrayToDataTable(pressureChartData);
 
-                    chart.draw(data, options);
-                }
-            </script>
+                            var options = {
+                                title: 'Pressure Sensors Chart',
+                                curveType: 'function',
+                                legend: { position: 'bottom' }
+                            };
+
+                            var chart_pressure = new google.visualization.LineChart(document.getElementById('pressure_chart'));
+                            chart_pressure.draw(data, options);
+                        }
+
+                        // Human Chart
+                        google.charts.load('current', { 'packages': ['corechart'] });
+                        google.charts.setOnLoadCallback(drawHumanChart);
+                        var data_temp_2 = '<%= dataRec_hum %>'.split(',');
+                        var j = 0;
+                        var humanChartData = [['ID', 'Humidity', 'Temperature',]];
+                        for (let i = 0; i < '<%= dataRec_length %>'; i++) {
+                            let temp = [];
+                            temp.push(parseInt(data_temp_2[j]));
+                            temp.push(parseInt(data_temp_2[j + 1]));
+                            temp.push(parseInt(data_temp_2[j + 2]));
+                            j = j + 3;
+                            humanChartData.push(temp);
+                        }
+                        function drawHumanChart() {
+                            var data_human = google.visualization.arrayToDataTable(humanChartData);
+
+                            var options_human = {
+                                title: 'Human Sensors Chart',
+                                curveType: 'function',
+                                legend: { position: 'bottom' }
+                            };
+
+                            var humanChart = new google.visualization.LineChart(document.getElementById('human_chart'));
+                            humanChart.draw(data_human, options_human);
+                        }
+
+                        // Ambient Chart
+                        google.charts.load('current', { 'packages': ['corechart'] });
+                        google.charts.setOnLoadCallback(drawAmbientChart);
+                        var data_temp = '<%= dataRec_amb %>'.split(',');
+                        var j = 0;
+                        var ambientChartData = [['ID', 'Humidity', 'Temperature',]];
+                        for (let i = 0; i < '<%= dataRec_length %>'; i++) {
+                            let temp = [];
+                            temp.push(parseInt(data_temp[j]));
+                            temp.push(parseInt(data_temp[j + 1]));
+                            temp.push(parseInt(data_temp[j + 2]));
+                            j = j + 3;
+                            ambientChartData.push(temp);
+                        }
+                        function drawAmbientChart() {
+                            var data_ambient = google.visualization.arrayToDataTable(ambientChartData);
+
+                            var options_ambient = {
+                                title: 'Ambient Sensors Chart',
+                                curveType: 'function',
+                                legend: { position: 'bottom' }
+                            };
+
+                            var ambient_chart = new google.visualization.LineChart(document.getElementById('ambient_chart'));
+                            ambient_chart.draw(data_ambient, options_ambient);
+                        }
+                    </script>
 </head>
 
 <body>
-    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="pressure_chart" style="width: 600px; height: 500px"></div>
+        </div>
+        <div class="col-sm-6">
+            <div id="ambient_chart" style="width: 600px; height: 250px"></div>
+            <div id="human_chart" style="width: 600px; height: 250px"></div>
+        </div>
+    </div>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
 
 </html>

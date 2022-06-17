@@ -117,12 +117,16 @@ app.post("/history", (req, res) => {
       "select D.id,D.p1, D.p2, D.p3, D.p4, D.hum, D.temp, D.amb_hum, D.amb_temp, D.amb_temp from Data D where D.pid = " + connection.escape(id),
       (error, result) => {
         if (error) throw error;
-        let data1 = [];
+        let data_pressure = [];
+        let data_hum = [];
+        let data_amb = [];
         for (let i = 0; i < result.length; i++) {
-          data1.push([result[i].id, result[i].p1, result[i].p2, result[i].p3, result[i].p4]);
+          data_pressure.push([result[i].id, result[i].p1, result[i].p2, result[i].p3, result[i].p4]);
+          data_hum.push([result[i].id, result[i].hum, result[i].temp]);
+          data_amb.push([result[i].id, result[i].amb_hum, result[i].amb_temp])
         }
         console.log(result.length);
-        res.render("history", { data: result, data1:data1, length:result.length });
+        res.render("history", { data: result, data_pressure:data_pressure, data_hum:data_hum, data_amb:data_amb, length:result.length });
       }
     );
   } else {
