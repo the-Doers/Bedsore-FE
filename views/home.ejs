@@ -64,7 +64,7 @@
                 // Add a background to the SVG
                 const background = svg
                     .append("rect")
-                    .style("stroke", "black")
+                    .style("stroke", "white")
                     .attr("width", width)
                     .attr("height", height)
 
@@ -188,7 +188,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet" />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
         <section class="vh-100 gradient-custom">
-            <h2 style="padding-top: 1rem; padding-left: 3rem; color: aliceblue;">Sensor Monitor</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2 style="padding-top: 1rem;text-align: center; padding-left: 3rem; color: aliceblue;">Sensor
+                        Monitor</h2>
+                </div>
+                <div class="col-sm-6" style="padding-top: 1rem; padding-left: 12rem;">
+                    <% if (0) { %>
+                        <button type="button" class="btn btn-success">All Good</button>
+                        <% } else {%>
+                            <button type="button" class="btn btn-danger">Danger</button>
+                            <% } %>
+                </div>
+            </div>
             <div class="row">
                 <div class="col col-sm-6 p-3">
                     <!-- form- inputs for sensors, and date and time picker to check historical vals -->
