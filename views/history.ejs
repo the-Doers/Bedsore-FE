@@ -53,8 +53,8 @@
                         for (let i = 0; i < '<%= dataRec_length %>'; i++) {
                             let temp = [];
                             temp.push(parseInt(data_temp_2[j]));
-                            temp.push(parseInt(data_temp_2[j + 1]));
-                            temp.push(parseInt(data_temp_2[j + 2]));
+                            temp.push(parseFloat(data_temp_2[j + 1]));
+                            temp.push(parseFloat(data_temp_2[j + 2]));
                             j = j + 3;
                             humanChartData.push(temp);
                         }
@@ -80,8 +80,8 @@
                         for (let i = 0; i < '<%= dataRec_length %>'; i++) {
                             let temp = [];
                             temp.push(parseInt(data_temp[j]));
-                            temp.push(parseInt(data_temp[j + 1]));
-                            temp.push(parseInt(data_temp[j + 2]));
+                            temp.push(parseFloat(data_temp[j + 1]) * 100);
+                            temp.push(parseFloat(data_temp[j + 2]));
                             j = j + 3;
                             ambientChartData.push(temp);
                         }
