@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mysql = require("mysql");
 
-var loggedIn = false;
+var loggedIn = true;
+var env = "local";
 
 const app = express();
 
@@ -31,12 +32,20 @@ app.use(
 //   console.log("Connected to the MySQL server.");
 // });
 
+if (env == "local"){
 var db_config = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_USERNAME,
-};
+  host: process.env.DB_HOST1,
+  user: process.env.DB_USERNAME1,
+  database: process.env.DB_DATABASENAME1,
+};}
+else {
+  var db_config = {
+    host: process.env.DB_HOST,
+    user: process.env.DB_USERNAME,
+    password: process.env.PASSWORD,
+    database: process.env.DB_DATABASENAME,
+  };
+}
 
 var connection;
 
@@ -126,7 +135,7 @@ app.post("/home", (req, res) => {
   if (loggedIn) {
     const { id } = req.body;
     connection.query(
-      "select D.id,D.p1, D.p2, D.p3, D.p4, D.hum, D.temp, D.amb_hum, D.amb_temp, D.amb_temp from Data D where D.pid = " + connection.escape(id) + " order by D.id desc limit 1",
+      "select D.id,D.p1, D.p2, D.p3, D.p4, D.hum, D.temp, D.amb_hum, D.amb_temp, D.amb_temp, D.risk from Data D where D.pid = " + connection.escape(id) + " order by D.id desc limit 1",
       (error, result) => {
         if (error) throw error;
         console.log(result[0]);
@@ -166,6 +175,12 @@ app.post("/history", (req, res) => {
     res.redirect("/login");
   }
 });
+
+//__________________LOGOUT_____________________//
+app.post("/logout", (req,res)=>{
+  loggedIn = false;
+  res.redirect("/login");
+})
 
 //__________________PORT BIND_____________________//
 app.listen(process.env.PORT || 3000, function () {
