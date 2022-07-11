@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const axios = require('axios');
 const mysql = require("mysql");
 
 var loggedIn = false;
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(
+  bodyParser.json(),
   bodyParser.urlencoded({
     extended: true,
   })
@@ -177,14 +179,18 @@ app.post("/history", (req, res) => {
 
 //__________________INSERT_____________________//
 app.post("/insert",(req,res)=>{
-  console.log("PID",req.query);
   const {pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp} = req.query;
-  console.log(pid);
-  var risk = 0;
-  if(p1 >= 800 || p2 >= 800 || p3 >= 800 || p4 >= 800)
-    risk = 1;
-  
-  connection.query(
+  axios.post('http://localhost:8080/model',req.query)
+  .then((result) => {
+    console.log(result.data);
+    var risk = result.data.risk;
+    connection.query("update patient set risk = "+connection.escape(risk)+" where pid ="+connection.escape(pid),(error) => {
+      if (error) throw error;
+      else {
+        console.log("Success");
+      }
+  });
+    connection.query(
     "insert into data (pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk) values (?)",
     [[pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk]],
     (error) => {
@@ -194,7 +200,13 @@ app.post("/insert",(req,res)=>{
         res.status(200).json("Successfully Inserted");
       }
     }
+
   );
+  }).catch((error) => {
+    console.error(error);
+});
+
+
 });
 
 //__________________PATIENT_____________________//
