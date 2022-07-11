@@ -196,6 +196,31 @@ app.post("/insert",(req,res)=>{
   );
 });
 
+//__________________PATIENT_____________________//
+app.get("/patient", (req,res)=>{
+  if (loggedIn) {
+    res.render("patient");
+  }else{
+    res.redirect("/login");
+  }
+})
+
+app.post("/patient", (req,res)=>{
+  const { name, age, gender, height, weight, bedAllocated, condition, comments} = req.body;
+  console.log(name, age, gender, height, weight, bedAllocated, condition, comments);
+  connection.query(
+    "insert into patient (name, age, gender, height, weight, bedAllocated, conditions, comments) values (?)",
+    [[name, age, gender, height, weight, bedAllocated, condition, comments]],
+    (error) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send("Successfully Inserted");
+      }
+    }
+  );
+})
+
 //__________________LOGOUT_____________________//
 app.post("/logout", (req,res)=>{
   loggedIn = false;

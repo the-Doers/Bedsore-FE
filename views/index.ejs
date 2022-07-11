@@ -1,5 +1,7 @@
 <%- include('partials/header') %>
 
+    <meta http-equiv="refresh" content="15">
+
     <div style="padding: 1rem">
         <div class="row">
             <div class="col-md-6">
@@ -49,6 +51,16 @@
             </div>
             <div class="col-md-6">
                 <img src="/5063406.jpg" alt="Representational image" style="height:22rem; width:37rem" />
+            </div>
+            <div class="col-sm-6 pt-4" style="display: flex; justify-content: center;">
+                <form action="/patient" method="GET">
+                    <button type="submit" class="btn btn-primary" id="view">Add New Patient</button>
+                </form>
+            </div>
+            <div class="col-sm-6 pt-4" style="display: flex; justify-content: center;">
+                <form action="/patient" method="GET">
+                    <button type="submit" class="btn btn-primary" id="view">View Patient Information</button>
+                </form>
             </div>
         </div>
     </div>
