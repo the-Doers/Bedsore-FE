@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mysql = require("mysql");
 
-var loggedIn = true;
+var loggedIn = false;
 
 const app = express();
 
