@@ -1,0 +1,53 @@
+<%- include('partials/header') %>
+    <div style="padding: 1rem">
+        <h2 style="padding: 1rem; color: aliceblue;">Patient Information</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <script>
+                                console.log('<%= data.name %>');
+                            </script>
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" value="<%= data.name %>" name="name" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" class="form-control" value="<%= data.age %>" name="age" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Gender</label>
+                            <input type="text" class="form-control" value="<%= data.gender %>" name="gender" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="height" class="form-label">Height(in cm)</label>
+                            <input type="number" class="form-control" value="<%= data.height %>" name="height" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="weight" class="form-label">Weight(in kg)</label>
+                            <input type="number" class="form-control" value="<%= data.weight %>" name="weight" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bedAllocated" class="form-label">Bed Allocated</label>
+                            <input type="number" class="form-control" value="<%= data.bedAllocated %>"
+                                name="bedAllocated" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="condition" class="form-label">Condition</label>
+                            <input type="text" class="form-control" value="<%= data.condition %>" name="condition"
+                                disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comments" class="form-label">Comments</label>
+                            <input type="text" class="form-control" value="<%= data.comments %>" name="comments"
+                                disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('partials/footer') %>

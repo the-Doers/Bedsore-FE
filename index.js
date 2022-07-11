@@ -205,9 +205,26 @@ app.get("/patient", (req,res)=>{
   }
 })
 
+app.get("/patientInfo", (req,res)=>{
+  if (loggedIn) {
+    const id = 1;
+    connection.query(
+      "select P.name, P.age, P.gender, P.height, P.weight, P.bedAllocated, P.conditions, P.comments from Patient P where P.pid = " + connection.escape(id),
+      (error, result) => {
+        if (error) throw error;
+        else {
+          console.log(result);
+          res.render("patientInfo", {data:result[0]});
+        }
+      }
+    );
+  }else{
+    res.redirect("/login");
+  }
+})
+
 app.post("/patient", (req,res)=>{
   const { name, age, gender, height, weight, bedAllocated, condition, comments} = req.body;
-  console.log(name, age, gender, height, weight, bedAllocated, condition, comments);
   connection.query(
     "insert into patient (name, age, gender, height, weight, bedAllocated, conditions, comments) values (?)",
     [[name, age, gender, height, weight, bedAllocated, condition, comments]],
