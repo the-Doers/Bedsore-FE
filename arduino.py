@@ -2,15 +2,9 @@ from pyfirmata import Arduino, util
 import pymysql
 from datetime import datetime
 import time
+import requests
 board = Arduino('/dev/ttyACM0')
-
-mydb = pymysql.connect(
-    host="remotemysql.com",
-    user="VpKbk3n9AR",
-    password="phHsGQYZql",
-    database="VpKbk3n9AR",
-)
-mycursor = mydb.cursor()
+url = "http://localhost:3000/insert"
 
 it = util.Iterator(board)
 it.start()
@@ -46,7 +40,16 @@ while True:
     amb_hum = '0.5'
     amb_temp = '23'
     pid = '1'
-    mycursor.execute("""INSERT INTO Data (pid,p1,p2,p3,p4,hum,temp,amb_hum,amb_temp) VALUES ('%s','%s', '%s','%s', '%s','%s', '%s','%s', '%s')""" % (
-        pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp))
-    mydb.commit()
-    print(mycursor.rowcount, "record inserted.")
+    r = requests.post(url, params={'pid': 1,
+                                   'p1': p1,
+                                   'p2': p2,
+                                   'p3': p3,
+                                   'p4': p4,
+                                   'hum': hum,
+                                   'temp': temp,
+                                   'amb_hum': amb_hum,
+                                   'amb_temp': amb_temp, })
+    if r.status_code != 200:
+        print("Error:", r.status_code)
+    else:
+        print('Success')

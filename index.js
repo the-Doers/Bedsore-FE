@@ -5,7 +5,6 @@ const ejs = require("ejs");
 const mysql = require("mysql");
 
 var loggedIn = true;
-var env = "local";
 
 const app = express();
 
@@ -32,7 +31,7 @@ app.use(
 //   console.log("Connected to the MySQL server.");
 // });
 
-if (env == "local"){
+if (process.env.ENV == "LOCALHOST"){
 var db_config = {
   host: process.env.DB_HOST1,
   user: process.env.DB_USERNAME1,
@@ -176,11 +175,32 @@ app.post("/history", (req, res) => {
   }
 });
 
+//__________________INSERT_____________________//
+app.post("/insert",(req,res)=>{
+  console.log("PID",req.query);
+  const {pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp} = req.query;
+  console.log(pid);
+  var risk = 0;
+  if(p1 >= 800 || p2 >= 800 || p3 >= 800 || p4 >= 800)
+    risk = 1;
+  connection.query(
+    "insert into data (pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk) values (?)",
+    [[pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk]],
+    (error) => {
+      if (error) {
+        res.status(303).json(error);
+      } else {
+        res.status(200).json("Successfully Inserted");
+      }
+    }
+  );
+});
+
 //__________________LOGOUT_____________________//
 app.post("/logout", (req,res)=>{
   loggedIn = false;
   res.redirect("/login");
-})
+});
 
 //__________________PORT BIND_____________________//
 app.listen(process.env.PORT || 3000, function () {
