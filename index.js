@@ -178,7 +178,7 @@ app.post("/history", (req, res) => {
 //__________________INSERT_____________________//
 app.post("/insert",(req,res)=>{
   console.log("PID",req.query);
-  const {pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp} = req.query;
+  var {pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp} = req.query;
   console.log(pid);
   var risk = 0;
   p1 = p1 *1000 - 400;
