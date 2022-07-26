@@ -14,14 +14,12 @@ s2 = board.analog[1]
 s3 = board.analog[2]
 s4 = board.analog[3]
 s5 = board.analog[4]
-s6 = board.analog[5]
 
 s1.enable_reporting()
 s2.enable_reporting()
 s3.enable_reporting()
 s4.enable_reporting()
 s5.enable_reporting()
-s6.enable_reporting()
 
 while True:
     time.sleep(15)
@@ -30,13 +28,12 @@ while True:
     print('s3:', s3.read())
     print('s4:', s4.read())
     print('s5:', s5.read())
-    print('s6:', s6.read())
     p1 = s1.read()
     p2 = s2.read()
     p3 = s3.read()
     p4 = s4.read()
     hum = s5.read()
-    temp = s6.read()
+    temp = '25'
     amb_hum = '0.5'
     amb_temp = '23'
     pid = '1'
