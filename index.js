@@ -181,6 +181,10 @@ app.post("/insert",(req,res)=>{
   const {pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp} = req.query;
   console.log(pid);
   var risk = 0;
+  p1 = p1 *1000 - 400;
+  p2 = p2 *1000 - 400;
+  p3 = p3 *1000 - 400;
+  p4 = p4 *1000 - 400;
   if(p1 >= 800 || p2 >= 800 || p3 >= 800 || p4 >= 800)
     risk = 1;
   
