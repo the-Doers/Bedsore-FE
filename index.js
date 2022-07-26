@@ -185,7 +185,7 @@ app.post("/insert",(req,res)=>{
     risk = 1;
   
   connection.query(
-    "insert into data (pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk) values (?)",
+    "insert into Data (pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk) values (?)",
     [[pid, p1, p2, p3, p4, hum, temp, amb_hum, amb_temp, risk]],
     (error) => {
       if (error) {

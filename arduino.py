@@ -4,7 +4,7 @@ from datetime import datetime
 import time
 import requests
 board = Arduino('/dev/ttyACM0')
-url = "http://localhost:3000/insert"
+url = "https://likith2000-bedsore.herokuapp.com/insert"
 
 it = util.Iterator(board)
 it.start()
